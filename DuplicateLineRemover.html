@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Duplicate Line Remover</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      padding: 20px;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .button-3 {
+        appearance: none;
+        background-color: #2ea44f;
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 6px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        }
+
+        .button-3:focus:not(:focus-visible):not(.focus-visible) {
+        box-shadow: none;
+        outline: none;
+        }
+
+        .button-3:hover {
+        background-color: #2c974b;
+        }
+
+        .button-3:focus {
+        box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+        outline: none;
+        }
+
+        .button-3:disabled {
+        background-color: #94d3a2;
+        border-color: rgba(27, 31, 35, .1);
+        color: rgba(255, 255, 255, .8);
+        cursor: default;
+        }
+
+        .button-3:active {
+        background-color: #298e46;
+        box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+        }
+
+    h1 {
+      text-align: center;
+    }
+
+    /* label {
+      text-align: center;
+    } */
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      resize: vertical;
+    }
+
+    .output-container {
+      display: none;
+      width: auto;
+      margin-top: 20px;
+      max-width: 100%;
+      align-items: center;
+    }
+
+    .output-container.show {
+      display: block;
+    }
+
+    .total-lines {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    @media (min-width: 480px) {
+      .container {
+        max-width: 480px;
+      }
+    }
+  </style>
+  <script>
+    function removeDuplicates() {
+      var textarea = document.getElementById("inputTextarea");
+      var lines = textarea.value.split("\n");
+      var uniqueLines = Array.from(new Set(lines));
+
+      var outputTextarea = document.getElementById("output");
+      outputTextarea.value = uniqueLines.join("\n");
+
+      var outputContainer = document.getElementById("outputContainer");
+      outputContainer.classList.add("show");
+
+      var copyButton = document.getElementById("copyButton");
+      copyButton.disabled = false;
+
+      var totalLines = document.getElementById("totalLines");
+      totalLines.textContent = "Total Lines Removed: " + (lines.length - uniqueLines.length);
+    }
+
+    function copyOutput() {
+      var outputTextarea = document.getElementById("output");
+      outputTextarea.select();
+      document.execCommand("copy");
+    }
+  </script>
+</head>
+<body>
+  <h2>Duplicate Line Remover</h2>
+  <div class="container">
+    <textarea id="inputTextarea" rows="10" cols="50"></textarea>
+  </div>
+  <div class="container">
+    <button class="button-3" onclick="removeDuplicates()">Remove Duplicates</button>
+  </div>
+  <div id="outputContainer" class="output-container">
+    <div class="container">
+      <textarea rows="10" cols="50" id="output" readonly></textarea>
+    </div>
+    <div class="container">
+      <button id="copyButton" class="button-3" onclick="copyOutput()" disabled>Copy Output</button>
+    </div>
+  </div>
+  <div id="totalLines" class="total-lines"></div>
+</body>
+</html>
